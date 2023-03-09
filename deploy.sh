@@ -1,13 +1,4 @@
 # 忽略错误
-###
- # @Author: LikSeven
- # @Date: 2023-03-09 11:36:08
- # @LastEditTime: 2023-03-09 14:40:46
- # @LastEditors: LikSeven
- # @Description: 
- # @FilePath: \blog\deploy.sh
- # 下面的代码没有bug!!!
-### 
 set -e
 
 # 构建
