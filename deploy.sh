@@ -2,7 +2,7 @@
 ###
  # @Author: LikSeven
  # @Date: 2023-03-09 11:36:08
- # @LastEditTime: 2023-03-09 14:33:15
+ # @LastEditTime: 2023-03-09 14:40:46
  # @LastEditors: LikSeven
  # @Description: 
  # @FilePath: \blog\deploy.sh
@@ -21,6 +21,6 @@ git add -A
 git commit -m 'deploy'
 
 # 如果部署到 https://<USERNAME>.github.io
-git push -f https://github.com/k2L3/blog.git master
+git push https://github.com/k2L3/blog.git show
 
 cd -
