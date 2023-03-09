@@ -10,8 +10,7 @@ cd docs/.vitepress/dist
 git init
 git add -A
 git commit -m 'deploy'
-
-# 如果部署到 https://<USERNAME>.github.io
-git push https://github.com/k2L3/blog.git show
+git checkout -b show
+git push -f https://github.com/k2L3/blog.git show
 
 cd -

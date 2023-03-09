@@ -11,7 +11,7 @@ var name = '张三';
 name = "李四";
 ```
 
-由var声明的变量都会提升到当前[作用域]()的最前端，var声明变量的过程分为两步，一步是执行左边语法声明了一个变量名，在调用到这个变量时在赋值，例：
+由var声明的变量都会提升到当前作用域的最前端，var声明变量的过程分为两步，一步是执行左边语法声明了一个变量名，在调用到这个变量时在赋值，例：
 
 ```javascript
 console.log(name); // ReferenceError: name is not defined
