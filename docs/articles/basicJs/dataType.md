@@ -118,8 +118,6 @@ console.log(j) // ReferenceError: Cannot access 'j' before initialization
     str.slice(0, 10) // 123abc
     ```
 
-<!---->
-
 *   **substring**
 
     返回一个字符串在开始索引到结束索引之间的一个子集，或从开始索引直到字符串的末尾的一个子集，不改变原字符串。
@@ -131,8 +129,6 @@ console.log(j) // ReferenceError: Cannot access 'j' before initialization
     let str2 = str.substring(1, 2); // 2
     let str3 = str.substring(1); // 23abc
     ```
-
-<!---->
 
 *   **replace**
 
@@ -148,8 +144,6 @@ console.log(j) // ReferenceError: Cannot access 'j' before initialization
     }) // 123ABC
     ```
 
-<!---->
-
 *   **split**
 
     返回一个由在出现子字符串 `sep` 时拆分调用的字符串然后填充的字符串数组，不改变源字符串。
@@ -160,8 +154,6 @@ console.log(j) // ReferenceError: Cannot access 'j' before initialization
     str.split('3') // [ '12', '456' ]
     str.split('7') // [ '123456' ]
     ```
-
-<!---->
 
 *   **includes**
 
@@ -246,4 +238,70 @@ let str3 = n.toFixed(2) // "1.00"
 
 ## 复杂类型
 
+复杂类型与简单类型相比，复杂类型值存在堆中，将指向堆的地址存在栈中，声明时只是引用了栈中的数据也就是堆的地址。简单类型存在栈中。
+
 ### Object
+
+对象类型，在 JavaScript 中，对象使用频繁，很多场景都能运用到对象，例如值的定义
+
+```javascript
+// 完全等价
+let num = new Number(1);
+let num = 1
+```
+
+#### 对象的创建
+
+```javascript
+let obj = new Object();
+let obj1 = new Object({ a: '属性a' });
+let boy = { 
+	name: '张三',
+	age: 8
+}
+```
+
+#### 获取属性
+
+```javascript
+let boy = { 
+	name: '张三',
+	age: 8
+}
+console.log(boy.age) // 8
+
+let key = 'age'
+console.log(boy[key]) // 8
+
+for (const key in boy) {
+    let value = boy[key]
+    console.log(key, value) // name '张三' age 8
+}
+```
+
+#### 修改属性
+
+```javascript
+boy.age = 9;
+// 当对象中不存在某个属性时，调用这个属性结果为undefined
+console.log(boy.a) // undefined
+// 给对象不存在的属性赋值时，不用事先声明，可直接赋值
+boy.grade = '小学'
+console.log(boy) // { name: '张三', age: 9, grade: '小学' }
+```
+
+### Array
+
+### Function
+
+### Date
+
+### RegExp
+
+### Math
+
+## 其他
+
+### Map
+
+### Set
