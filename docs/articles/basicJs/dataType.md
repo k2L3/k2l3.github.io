@@ -1,3 +1,7 @@
+# 前言
+
+**经过思考过于基础的内容没有再详细写，写博文主要原因是想巩固基础和学习更多知识，也就是进阶，所以算是我的学习路径，写了一点之后发现过于基础的内容没太大必要写出来，还是读官方文档比较好，基础后续就记录常用的或者容易遗忘的内容，以及一些小技巧吧。**
+
 # 语法与数据类型
 
 ## 声明
@@ -236,6 +240,34 @@ let str2 = String(n);
 let str3 = n.toFixed(2) // "1.00"
 ```
 
+tips：因为精度问题，小数计算时容易丢失精度。
+
+常用解决方法转成整数，计算后再转成小数
+
+```javascript
+let n1 = 1
+let n2 = 0.8
+console.log(n1 - n2) // 0.19999999999999996
+let n3 = ( n1 * 10 - n2 * 10) / 10 // 0.2
+```
+
+当数据过大，或者小数点后面位数太多时，不是很适用，所以我们可以先转成字符串再截取小数点来进行计算。亦或者适用tofixed等来进行保留小数位数。
+
+```javascript
+function floatAdd(n1, n2) {
+    try {
+        let _n1 = typeof n1 === 'number' ? n1.toString() : n1;
+        let _n2 = typeof n2 === 'number' ? n2.toString() : n2;
+        let r1 = _n1.split(".")[1]?.length || 0;
+        let r2 = _n2.split(".")[1]?.length || 0;
+        let n = Math.pow(10, Math.max(r1, r2)); // Math.pow(x, y)求x的y次方
+        return (n1 * n + n2 * n) / n;
+    } catch (error) {
+        console.log(error)
+    }
+}
+```
+
 ## 复杂类型
 
 复杂类型与简单类型相比，复杂类型值存在堆中，将指向堆的地址存在栈中，声明时只是引用了栈中的数据也就是堆的地址。简单类型存在栈中。
@@ -277,6 +309,10 @@ for (const key in boy) {
     let value = boy[key]
     console.log(key, value) // name '张三' age 8
 }
+Object.entries(boy); // [['name','张三'], ['age',8]] 将对象转成二维数组
+Object.values(boy); // ['张三', 8] 将对象的值转成数组
+Object.keys(boy); // ["name", "age"] 将对象的key转成数组
+Object.fromEntries(arr) //将二维数组转成对象
 ```
 
 #### 修改属性
@@ -290,7 +326,124 @@ boy.grade = '小学'
 console.log(boy) // { name: '张三', age: 9, grade: '小学' }
 ```
 
+其他
+
+```javascript
+// toString常用来判断类型
+Object.prototype.toString({}) // [object Object]
+// Object.defineProperty() vue2中响应式核心，接收三个参数 对象、对象中的属性、要定义或修改的属性描述符；
+let person = {
+    name: "张三",
+    age: 1
+}
+let age = 1;
+Object.defineProperty(person, "age", {
+    // value: age,
+    // configurable: false, // 是否可以通过 delete 操作符删除该属性
+    // enumerable: false, // 循环的时候, 是否可以被枚举出来
+    // writable: false, // 是否可以使用 ++, -- 等操作符
+    get() {
+        console.log("触发了get")
+        return age
+    },
+    set(newValue) {
+        if(age !== newValue) age = newValue;
+    }
+})
+
+person.age = 2;
+console.log(person.age)
+console.log(age)
+// 触发了get
+// 2
+// 2
+```
+
 ### Array
+
+数组
+
+#### 定义
+
+```javascript
+let arr = [];
+let arr = new Array();
+```
+
+#### 常用方法
+
+数组的方法都算比较常用的，写一下在什么时候使用什么api吧
+
+```javascript
+let arr = [1, 2, 3, 4];
+
+// 删除首位元素并返回被删除的元素，会改变原数组
+arr.shift();
+
+// 在首位插入元素，会改变原数组
+arr.unshfit();
+
+// 删除末尾元素并返回被删除的元素，会改变原数组
+arr.pop();
+
+// 在末尾插入元素
+arr.push(item);
+
+// 获取指定位置元素
+arr.at(index) // at要注意浏览器兼容问题，index可以为负数，-1就是最后一位，依次类推
+
+// 获取开始下标到结尾下标这一范围的数据，end不是必填，不填时默认取到最后一个元素
+// begin 和 end 都可以为负数，如果end大于数组长度也只能取到最后一个元素
+arr.slice(begin, end) 
+arr.slice(0) // [1, 2, 3, 4] 
+arr.slice(-1) // [4]
+arr.slice(0, -1) // [1, 2, 3]
+arr.slice(-2, -1) // [3]
+arr.slice(0, 10) // [1, 2, 3, 4]
+
+// 指定位置插入、删除指定元素，并以数组形式返回被修改的内容。此方法会改变原数组
+arr.splice(start, deleteCount, item1, item2, itemN)
+// start 开始下标必填，deleteCount 删除个数，不填删除到最后， item1... 插入的元素
+arr.splice(0, 1) // [1], arr = [2, 3, 4]
+arr.splice(0, 0, 1)// [], arr = [1, 2, 3, 4] 因为没有删除东西，所以返回的一个空数组
+
+// 数组翻转，改变原数组
+arr.reverse()
+
+// 数组排序，改变原数组
+arr.sort()
+
+// 根据规则查找元素，也可用来判断元素是否存在数组中
+arr.find()
+
+// 元素是否存在数组中，一般用于由基本类型构成的数组
+arr.includes()
+
+// 筛选符合条件的数据组成新数组返回
+arr.filter()
+
+// 根据原数组返回指定数据的新数组
+arr.map()
+
+// 遍历
+arr.forEach()
+for, while, for in, for of
+
+// 是否都符合某条件
+arr.every()
+
+// 是否存在符合条件的
+arr.some()
+
+// 元素相加
+arr.reduce((previousValue, currentValue, currentIndex, array) => {}, initialValue)
+// previousValue 上一次调用 callbackFn 时的返回值。在第一次调用时，若指定了初始值 initialValue，其值则为 initialValue，否则为数组索引为 0 的元素 array[0]。
+// currentValue 数组中正在处理的元素。在第一次调用时，若指定了初始值 initialValue，其值则为数组索引为 0 的元素 array[0]，否则为 array[1]。
+// initialValue 初始值。
+
+// 数组的元素连接成一个字符串
+arr.join()
+```
 
 ### Function
 
