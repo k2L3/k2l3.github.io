@@ -443,13 +443,147 @@ arr.reduce((previousValue, currentValue, currentIndex, array) => {}, initialValu
 
 // 数组的元素连接成一个字符串
 arr.join()
+
+// 两个数组合并，不改变原数组
+arr.concat();
+// 利用 “...”扩展运算符;
+// 例：
+let arr1 = [1]
+let arr2 = [2]
+let arr3 = arr1.concat(arr2) // [1, 2]
+arr3 = [...arr1, ...arr2] // [1, 2]
 ```
 
 ### Function
 
+函数，函数时js世界的一等公民，其实我不太懂这句话的意思，可能以前上课走神了吧，我自己的感受就是，函数时开发js语言必不可少的一个类型。
+
+#### 函数声明
+
+function关键字， 函数名，参数（可选），大括号
+
+```javascript
+function fn(arguments) {}
+```
+
+#### 函数表达式
+
+函数表达式可以是匿名函数（就是没有函数名的函数）
+
+```javascript
+const fn1 = function f() {};
+const fn2 = function () {};
+```
+
+#### 箭头函数
+
+箭头函数时es6的语法，省略了function关键字和函数名 新增了箭头，还有最重要的一点箭头没有this指向问题，后面模块细说
+
+```javascript
+const fn = () => {}
+```
+
 ### Date
 
+日期对象
+
+Date 对象有大量的设置、获取和操作日期的方法。它并不含有任何属性。
+
+JavaScript 处理日期数据类似于 Java。这两种语言有许多一样的处理日期的方法，也都是以 1970 年 1 月 1 日 00:00:00 以来的毫秒数来储存数据类型的。
+
+Date 对象的范围是相对距离 UTC 1970 年 1 月 1 日 的前后 100,000,000 天。
+
+*tip：我发现原生的时间对象在工作中我确实用得不多，基本都是用的[moment.js](http://momentjs.cn/)这个库。*
+
+```javascript
+let today = new Date();
+```
+
+#### Date对象的方法
+
+Date 具体有年（从 1900 开始的年数）、月（0 (一月) 到11 (十二月)）、日、星期（0 (周日) 至 6 (周六)）、时（0 至 23）、分（0 至 59）、秒（0 至 59）这些值
+
+[更多详细方法请看MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date#javascript_date_%E5%AE%9E%E4%BE%8B)
+
+*   get 获取 Date 对象的日期和时间的值
+
+```javascript
+// 获取年
+today.getFullYear()
+// 获取月
+today.getMonth()
+// 获取周
+today.getDay()
+// 获取日
+today.getDate()
+// 获取时
+today.getHours()
+// 获取分
+today.getMinutes()
+// 获取秒
+today.getSeconds()
+// 获取毫秒
+today.getTime()
+```
+
+*   set 设置 Date 对象的日期和时间的值&#x20;
+
+```javascript
+let today = new Date() // 2023-04-13T07:03:08.297Z
+today.setFullYear(2012)
+console.log(today); // 2012-04-13T07:02:19.667Z
+```
+
+*   to 返回 Date 对象的字符串格式的值
+
+```javascript
+let date = new Date();
+
+// 根据本地时间格式，把 Date 对象转换为字符串。
+date.toLocaleString(); // 2023/4/13 15:19:33
+
+// 把 Date 对象转换为字符串。
+date.toString(); // Thu Apr 13 2023 15:17:45 GMT+0800 (中国标准时间)
+```
+
+*   parse 和 UTC 方法，用于解析 Date 字符串
+
+```javascript
+// 返回1970年1月1日午夜到指定日期（字符串）的毫秒数。
+Date.parse("2023-01-02") // 1672617600000
+
+// getUTCDate() 方法可根据世界时返回一个月 (UTC) 中的某一天。
+let date = new Date("2023-04-13");
+let n = date.getUTCDate(); // 13
+```
+
 ### RegExp
+
+正则表达式，用于匹配符合规则的字符串
+
+#### 定义
+
+有两种方式一种是用RegExp对象的构造函数，一种是双斜杠的方式
+
+```javascript
+let re = new RegExp("\\w+");
+let re = /\w+/;
+```
+
+[正则规则MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_expressions#%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A8%A1%E5%BC%8F)
+
+常用
+
+```javascript
+let str = "abcd1234";
+// string的replace方法是我经常用到正则的一个地方
+str.replace(/[a-z]*/, "") // 1234 替换所有字母
+
+// 还有个就是利用 test() 判断字符串是不是邮箱之类，符合规则返回true，不符合返回false
+const str = "123456@163.com";
+const reg = new RegExp(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
+const isEmail = reg.test(str); // true
+```
 
 ### Math
 
